@@ -1,13 +1,16 @@
 #! /bin/bash
 
 # install appropriate tools
-if [ -n "which apt" ]; then apt install git vim-gui-common vim-runtime -y
+if [ -n "which apt" ]; then apt install git vim-gui-common vim-runtime zsh exa -y
 elif [ -n "which yum" ]; then yum install git vim-common vim-enhanced vim-minimal -y
 else echo "FAILED TO INSTALL PACKAGE: Package manager not found."; fi
 
 # Get user
 USER=$(stat -c '%U' .)
 HOMEDIR=$( getent passwd $USER | cut -d: -f6 )
+
+# Install Oh-My-ZSH
+#TODO
 
 # Install Font
 mkdir -p $HOMEDIR/.fonts
@@ -28,3 +31,6 @@ rm $HOMEDIR/.poshthemes/themes.zip
 
 # Fix new/git files ownership
 chown -R $USER .vim .bash_profile .bashrc .screenrc .tmux.conf .vimrc README.md download_home.sh .git
+
+# Change Shell
+chsh -s "$(which zsh)"
